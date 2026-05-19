@@ -77,6 +77,13 @@
   --chart-4: #e5e7eb;
   --chart-5: #f3f4f6;
   --radius: 0.75rem;
+
+  --sidebar: transparent;
+  --sidebar-foreground: #111827;
+  --sidebar-border: #e5e7eb;
+  --sidebar-accent: #0049db;           /* darker — was #f3f4f6, too close to white */
+  --sidebar-accent-foreground: #111827;
+  --sidebar-ring: #000000;
 }
 
 .dark {
@@ -103,6 +110,12 @@
   --chart-3: #737373;
   --chart-4: #525252;
   --chart-5: #404040;
+  --sidebar: #0a0a0a;
+  --sidebar-foreground: #e4e4e7;
+  --sidebar-border: #262626;
+  --sidebar-accent: #1a1a1a;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-ring: #ffffff;
 }
 
 @layer base {
@@ -132,6 +145,13 @@
   .glass {
     @apply bg-white/70 dark:bg-black/40 backdrop-blur-md border border-white/20 dark:border-white/10;
   }
+
+  /* Sidebar-specific glass — slightly more opaque so nav text stays readable */
+  .sidebar-glass {
+    @apply bg-white/80 dark:bg-black/60 backdrop-blur-md
+           border-r border-white/20 dark:border-white/10;
+  }
+
   .gradient-text {
     @apply text-foreground font-bold;
   }

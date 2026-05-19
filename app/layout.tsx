@@ -6,6 +6,8 @@ import { ThemeProvider } from "next-themes";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
+import { Topbar } from "@/components/layout/Topbar";
+
 const inter = Inter({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
@@ -42,8 +44,9 @@ export default function RootLayout({
           <SidebarProvider>
             <TooltipProvider>
               <AppSidebar />
-              <main>
-                <SidebarTrigger />
+              <main >
+              <Topbar/>
+                
                 {children}
                 <Toaster />
               </main>
