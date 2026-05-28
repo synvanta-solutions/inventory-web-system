@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   Sidebar,
   SidebarContent,
@@ -15,36 +17,26 @@ import {
 
 import { Button } from "@/components/ui/button";
 import {
-
   LayoutDashboard,
   Package,
   Box,
   Users,
   ShoppingCart,
   BarChart3,
-  Settings,
-
   LogOut,
 } from "lucide-react";
-import { useState, useEffect } from "react";
-import { useTheme } from "next-themes";
 
 const navLinks = [
-  { name: "Dashboard", icon: LayoutDashboard },
-  { name: "Inventory", icon: Package },
-  { name: "Products", icon: Box },
-  { name: "Suppliers", icon: Users },
-  { name: "Orders", icon: ShoppingCart },
-  { name: "Reports", icon: BarChart3 },
-  { name: "Settings", icon: Settings },
+  { name: "Dashboard", icon: LayoutDashboard, href: "/" },
+  { name: "Inventory", icon: Package, href: "/inventory" },
+  { name: "Products", icon: Box, href: "/products" },
+  { name: "Suppliers", icon: Users, href: "/suppliers" },
+  { name: "Orders", icon: ShoppingCart, href: "/orders" },
+  { name: "Reports", icon: BarChart3, href: "/reports" },
 ];
 
 export function AppSidebar() {
-  const [activeTab, setActiveTab] = useState("Dashboard");
-  const [mounted, setMounted] = useState(false);
-  const { resolvedTheme, setTheme } = useTheme();
-
-  useEffect(() => setMounted(true), []);
+  const pathname = usePathname();
 
   return (
     <Sidebar>
@@ -68,18 +60,29 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupLabel>Navigation</SidebarGroupLabel>
           <SidebarMenu>
-            {navLinks.map((link) => (
-              <SidebarMenuItem key={link.name}>
-                <SidebarMenuButton
-                  isActive={activeTab === link.name}
-                  onClick={() => setActiveTab(link.name)}
-                  tooltip={link.name}
-                >
-                  <link.icon className="w-4 h-4" />
-                  <span>{link.name}</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            ))}
+            {navLinks.map((link) => {
+              const isActive =
+                pathname === link.href ||
+                (link.href !== "/" && pathname?.startsWith(link.href));
+
+              return (
+                <SidebarMenuItem key={link.name}>
+                  <SidebarMenuButton
+                    asChild
+                    isActive={isActive}
+                    tooltip={link.name}
+                  >
+                    <Link
+                      href={link.href}
+                      aria-current={isActive ? "page" : undefined}
+                    >
+                      <link.icon className="w-4 h-4" />
+                      <span>{link.name}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              );
+            })}
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>
@@ -88,12 +91,11 @@ export function AppSidebar() {
 
       {/* Footer — Theme Toggle + Notifications + User Menu */}
       <SidebarFooter>
-
         {/* User Menu */}
         <SidebarMenu>
           <SidebarMenuItem>
             <Button className="w-full" variant="outline" size="lg">
-              <LogOut/>
+              <LogOut />
               Logout
             </Button>
           </SidebarMenuItem>

@@ -44,9 +44,9 @@ export default function RootLayout({
           <SidebarProvider>
             <TooltipProvider>
               <AppSidebar />
-              <main >
-              <Topbar/>
-                
+              <main className="w-full">
+                <Topbar />
+
                 {children}
                 <Toaster />
               </main>
